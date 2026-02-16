@@ -1,26 +1,180 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<title>THOVAL</title>
+<meta charset="UTF-8">
+<title>THOVAL | Premium Streaming</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- FUENTE MODERNA -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    background:#050505;
+    font-family:'Poppins', sans-serif;
+    color:white;
+    text-align:center;
+}
+
+/* HEADER */
+header{
+    padding:90px 20px;
+    background: radial-gradient(circle at top,#111,#000);
+}
+
+/* TEXTO DORADO TEXTURA */
+.logo{
+    font-family:'Orbitron', sans-serif;
+    font-size:4em;
+    background: linear-gradient(45deg,#d4af37,#ffd700,#b8962e,#ffd700,#d4af37);
+    background-size:300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation: brillo 6s linear infinite;
+    letter-spacing:6px;
+}
+
+@keyframes brillo{
+    0%{background-position:0%}
+    100%{background-position:300%}
+}
+
+.sub{
+    opacity:.8;
+    margin-top:10px;
+}
+
+/* BOTON */
+.btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:16px 45px;
+    font-size:18px;
+    border-radius:14px;
+    text-decoration:none;
+    color:black;
+    font-weight:bold;
+    background:linear-gradient(45deg,#d4af37,#ffd700);
+    box-shadow:0 0 25px rgba(212,175,55,.4);
+    transition:.3s;
+}
+.btn:hover{
+    transform:scale(1.07);
+    box-shadow:0 0 40px rgba(255,215,0,.7);
+}
+
+/* SECCIONES */
+.section{
+    padding:70px 20px;
+}
+
+.titulo{
+    font-size:2.5em;
+    margin-bottom:40px;
+    color:#ffd700;
+}
+
+/* TARJETAS PLANES */
+.planes{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:30px;
+}
+
+.plan{
+    background:linear-gradient(145deg,#111,#0a0a0a);
+    border:1px solid rgba(255,215,0,.15);
+    padding:35px;
+    width:260px;
+    border-radius:20px;
+    transition:.4s;
+}
+
+.plan:hover{
+    transform:translateY(-15px) scale(1.03);
+    border:1px solid rgba(255,215,0,.6);
+    box-shadow:0 0 35px rgba(255,215,0,.2);
+}
+
+.plan h2{
+    color:#ffd700;
+}
+
+.precio{
+    font-size:2.4em;
+    margin:15px 0;
+    font-weight:bold;
+}
+
+/* BENEFICIOS */
+.lista{
+    max-width:700px;
+    margin:auto;
+    line-height:2em;
+    font-size:18px;
+    opacity:.9;
+}
+
+/* FOOTER */
+footer{
+    padding:40px;
+    background:black;
+    opacity:.6;
+    font-size:14px;
+}
+
+</style>
 </head>
-<body style="background:black;color:white;text-align:center;font-family:Arial">
 
-<h1 style="color:gold">THOVAL</h1>
-<p>Streaming premium al mejor precio</p>
+<body>
 
-<h2>Planes</h2>
+<header>
+<div class="logo">THOVAL</div>
+<p class="sub">Streaming premium al mejor precio</p>
+<a class="btn" href="#">COMPRAR AHORA</a>
+</header>
 
-<div style="border:1px solid gold;padding:20px;margin:20px">
-<h3>Básico</h3>
-<p>$5</p>
+<section class="section">
+<div class="titulo">Planes Disponibles</div>
+
+<div class="planes">
+
+<div class="plan">
+<h2>Básico</h2>
+<div class="precio">$5</div>
+<p>Calidad HD</p>
+<p>1 dispositivo</p>
+<a class="btn" href="#">Elegir</a>
 </div>
 
-<div style="border:1px solid gold;padding:20px;margin:20px">
-<h3>Premium</h3>
-<p>$10</p>
+<div class="plan">
+<h2>Premium</h2>
+<div class="precio">$10</div>
+<p>Calidad 4K</p>
+<p>Hasta 4 dispositivos</p>
+<a class="btn" href="#">Elegir</a>
 </div>
 
-<p>Aceptamos pagos con tarjeta débito y crédito</p>
+</div>
+</section>
+
+<section class="section">
+<div class="titulo">¿Por qué elegir THOVAL?</div>
+<div class="lista">
+✔ Activación inmediata<br>
+✔ Soporte rápido<br>
+✔ Garantía total<br>
+✔ Pagos con tarjeta débito y crédito<br>
+✔ Servicio confiable
+</div>
+</section>
+
+<footer>
+© 2026 THOVAL — Todos los derechos reservados
+</footer>
 
 </body>
 </html>
