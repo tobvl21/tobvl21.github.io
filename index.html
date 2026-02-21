@@ -5,69 +5,71 @@
 <title>THOVAL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
 
 <style>
 
 /* BASE */
 body{
 margin:0;
-background:#0a0a0a;
+font-family:Rajdhani;
+background:#070710;
 color:white;
-font-family:Poppins;
 text-align:center;
-overflow-x:hidden;
+transition:.3s;
 }
 
-/* INTRO */
-#intro{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999;
-animation:fade 2.5s forwards 2s;
+.light{
+background:#f4f4f4;
+color:#111;
 }
 
-@keyframes fade{
-to{opacity:0;visibility:hidden}
-}
-
-/* LOGO LED */
+/* LOGO */
 .logo{
 font-family:Orbitron;
-font-size:3.5em;
-margin:25px;
-padding:10px 25px;
-border:3px solid gold;
-border-radius:14px;
-color:gold;
-text-shadow:0 0 10px gold,0 0 30px gold;
-animation:led 2s infinite alternate;
-display:inline-block;
+font-size:3em;
+margin:20px;
+color:#0ff;
+text-shadow:0 0 10px #0ff,0 0 40px #8a2be2;
 }
 
-@keyframes led{
-from{box-shadow:0 0 10px gold}
-to{box-shadow:0 0 35px gold,0 0 60px orange}
+/* MENU IZQ */
+.menuBtn{
+position:fixed;
+top:15px;
+left:15px;
+font-size:26px;
+cursor:pointer;
 }
 
-/* NAV */
-nav{
-margin-bottom:20px;
+.menu{
+position:fixed;
+top:0;
+left:-230px;
+width:230px;
+height:100%;
+background:#111;
+padding-top:80px;
+transition:.4s;
 }
 
-button.menu{
+.menu a{
+display:block;
+padding:15px;
+cursor:pointer;
+}
+
+.menu.show{left:0}
+
+/* BOTONES */
+button{
 padding:10px 18px;
 margin:5px;
 border:none;
 border-radius:8px;
-background:#1a1a1a;
-color:white;
 cursor:pointer;
+background:#111;
+color:#0ff;
 }
 
 /* GRID */
@@ -81,39 +83,29 @@ padding:20px;
 
 .card{
 width:220px;
-background:#111;
-border-radius:18px;
 padding:25px;
-transition:.35s;
+border-radius:16px;
+background:#0d0d18;
+border:1px solid #0ff3;
 cursor:pointer;
-border:1px solid #222;
+transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 25px rgba(255,215,0,.25);
+transform:scale(1.05);
+box-shadow:0 0 25px #0ff7;
 }
 
-.card img{
-width:85px;
-height:85px;
-object-fit:contain;
-}
+.precio{color:#8a2be2;font-size:1.4em}
 
-.precio{
-color:gold;
-font-size:1.4em;
-margin:10px;
-}
-
-/* MODAL PRODUCTO */
+/* MODAL */
 .modal{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,.85);
+background:#000c;
 display:none;
 align-items:center;
 justify-content:center;
@@ -122,7 +114,7 @@ justify-content:center;
 .box{
 background:#111;
 padding:30px;
-border-radius:20px;
+border-radius:18px;
 width:350px;
 }
 
@@ -131,14 +123,45 @@ background:#1c1c1c;
 margin:10px;
 padding:12px;
 border-radius:10px;
+}
+
+/* CARRITO */
+#cart{
+position:fixed;
+top:15px;
+right:20px;
+background:#111;
+padding:12px 18px;
+border-radius:12px;
 cursor:pointer;
 }
 
-/* REVIEWS */
-textarea,input{
+#cartBox{
+position:fixed;
+top:70px;
+right:20px;
+background:#111;
+padding:20px;
+border-radius:15px;
+display:none;
+width:250px;
+}
+
+/* NEWS */
+#news{display:none}
+.newsCard{
+background:#111;
+margin:15px auto;
+padding:20px;
+width:60%;
+border-radius:14px;
+}
+
+/* FORM */
+input,textarea,select{
 width:80%;
-margin:5px;
-padding:8px;
+margin:6px;
+padding:9px;
 border-radius:8px;
 border:none;
 }
@@ -150,149 +173,155 @@ padding:10px;
 border-radius:10px;
 }
 
-/* NEWS PANEL */
-#newsPanel{
-display:none;
-padding:30px;
-}
-
-.news{
-background:#151515;
-margin:15px auto;
-padding:20px;
-width:60%;
-border-radius:14px;
-}
-
 </style>
 </head>
 <body>
 
-<div id="intro"><div class="logo">THOVAL</div></div>
+<div class="menuBtn" onclick="toggleMenu()">☰</div>
+
+<div class="menu" id="menu">
+<a onclick="nav('shop')">Tienda</a>
+<a onclick="nav('news')">Noticias</a>
+<a onclick="toggleMode()">Modo claro/oscuro</a>
+</div>
 
 <div class="logo">THOVAL</div>
 
-<nav>
-<button class="menu" onclick="mostrar('tienda')">Tienda</button>
-<button class="menu" onclick="mostrar('news')">Noticias</button>
-</nav>
+<div>
+<button onclick="filter('all')">Todos</button>
+<button onclick="filter('peliculas')">Películas</button>
+<button onclick="filter('musica')">Música</button>
+<button onclick="filter('deportes')">Deportes</button>
+</div>
+
+<div id="cart" onclick="toggleCart()">🛒 <span id="count">0</span></div>
+
+<div id="cartBox">
+<h3>Carrito</h3>
+<div id="items"></div>
+<hr>
+Total $<span id="total">0</span>
+</div>
 
 <!-- TIENDA -->
-<div id="tienda">
-
+<div id="shop">
 <div class="grid" id="grid"></div>
-
 </div>
 
 <!-- NEWS -->
-<div id="newsPanel">
+<div id="news">
 <h2>Noticias</h2>
-<div class="news">🎮 Nuevo juego rompe récord mundial</div>
-<div class="news">🎬 Película arrasa en taquilla</div>
-<div class="news">⚽ Partido histórico sorprende fans</div>
-<div class="news">🦸 Nueva serie confirmada</div>
+<div class="newsCard">🎮 Nuevo juego rompe récord</div>
+<div class="newsCard">⚽ Final histórica</div>
+<div class="newsCard">🎬 Estreno rompe taquilla</div>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-<div class="box" id="modalContent"></div>
+<div class="box" id="content"></div>
 </div>
 
 <script>
 
-/* DATA */
+/* SERVICIOS */
 const servicios=[
-{
-name:"Netflix",
-precio:4990,
-img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
-desc:"Plataforma líder de series y películas."
-},
-{
-name:"Spotify",
-precio:3990,
-img:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",
-desc:"Música ilimitada sin anuncios."
-},
-{
-name:"Disney+",
-precio:6990,
-img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg",
-desc:"Contenido Disney, Marvel y más."
-}
+{name:"Netflix",precio:4990,cat:"peliculas"},
+{name:"Disney+",precio:6990,cat:"peliculas"},
+{name:"HBO Max",precio:5990,cat:"peliculas"},
+{name:"Spotify",precio:3990,cat:"musica"},
+{name:"YouTube Premium",precio:5990,cat:"musica"},
+{name:"ESPN+",precio:7990,cat:"deportes"},
+{name:"DAZN",precio:8990,cat:"deportes"}
 ]
 
-/* RENDER CARDS */
-function render(){
+let total=0,count=0
+
+function render(list){
 grid.innerHTML=""
-servicios.forEach(s=>{
+list.forEach(s=>{
 grid.innerHTML+=`
-<div class="card" onclick="abrir('${s.name}')">
-<img src="${s.img}">
+<div class="card" onclick="openProd('${s.name}',${s.precio})">
 <h3>${s.name}</h3>
 <div class="precio">$${s.precio}</div>
 </div>`
 })
 }
-render()
+render(servicios)
 
-/* SWITCH MENU */
-function mostrar(sec){
-tienda.style.display=sec=="tienda"?"block":"none"
-newsPanel.style.display=sec=="news"?"block":"none"
+/* FILTRO */
+function filter(c){
+if(c==="all")render(servicios)
+else render(servicios.filter(x=>x.cat===c))
 }
+
+/* MENU */
+function toggleMenu(){
+menu.classList.toggle("show")
+}
+
+/* NAV */
+function nav(x){
+shop.style.display=x=="shop"?"block":"none"
+news.style.display=x=="news"?"block":"none"
+menu.classList.remove("show")
+}
+
+/* DARK MODE */
+function toggleMode(){
+document.body.classList.toggle("light")
+}
+
+/* CARRITO */
+function add(n,p){
+total+=p
+count++
+countEl.innerText=count
+items.innerHTML+=`<div>${n} $${p}</div>`
+totalEl.innerText=total
+}
+
+function toggleCart(){
+cartBox.style.display=
+cartBox.style.display==="block"?"none":"block"
+}
+
+const countEl=document.getElementById("count")
+const totalEl=document.getElementById("total")
 
 /* MODAL PRODUCTO */
-function abrir(nombre){
-const s=servicios.find(x=>x.name==nombre)
-
+function openProd(n,p){
 modal.style.display="flex"
-
-modalContent.innerHTML=`
-<h2>${s.name}</h2>
-<img src="${s.img}" width="90">
-<p>${s.desc}</p>
-
+content.innerHTML=`
+<h2>${n}</h2>
 <h3>Planes</h3>
-<div class="plan">1 mes — $${s.precio}</div>
-<div class="plan">3 meses — $${s.precio*3}</div>
-<div class="plan">6 meses — $${s.precio*6}</div>
+<div class="plan" onclick="add('${n}',${p})">1 mes — $${p}</div>
+<div class="plan" onclick="add('${n}',${p*3})">3 meses — $${p*3}</div>
+<div class="plan" onclick="add('${n}',${p*6})">6 meses — $${p*6}</div>
 
-<h3>Opiniones</h3>
-<input id="user" placeholder="Nombre">
-<select id="stars">
-<option>5</option><option>4</option><option>3</option><option>2</option><option>1</option>
-</select>
-<textarea id="comment" placeholder="Comentario"></textarea>
-<button onclick="guardar('${s.name}')">Enviar</button>
+<h3>Reseña</h3>
+<input id="u" placeholder="Nombre">
+<select id="s"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+<textarea id="c"></textarea>
+<button onclick="save('${n}')">Enviar</button>
 
-<div id="reviews"></div>
-<button onclick="cerrar()">Cerrar</button>
+<div id="rev"></div>
+<button onclick="modal.style.display='none'">Cerrar</button>
 `
-
-cargar(nombre)
+load(n)
 }
-
-function cerrar(){modal.style.display="none"}
 
 /* REVIEWS */
-function guardar(prod){
-const r={
-n:user.value,
-s:stars.value,
-c:comment.value
-}
-let data=JSON.parse(localStorage.getItem(prod)||"[]")
-data.push(r)
-localStorage.setItem(prod,JSON.stringify(data))
-cargar(prod)
+function save(p){
+let r={n:u.value,s:s.value,c:c.value}
+let d=JSON.parse(localStorage.getItem(p)||"[]")
+d.push(r)
+localStorage.setItem(p,JSON.stringify(d))
+load(p)
 }
 
-function cargar(prod){
-let data=JSON.parse(localStorage.getItem(prod)||"[]")
-reviews.innerHTML=data.map(x=>`
-<div class="review">⭐${x.s} ${x.n}<br>${x.c}</div>
-`).join("")
+function load(p){
+let d=JSON.parse(localStorage.getItem(p)||"[]")
+rev.innerHTML=d.map(x=>`<div class="review">⭐${x.s} ${x.n}<br>${x.c}</div>`).join("")
 }
 
 </script>
