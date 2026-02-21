@@ -18,11 +18,7 @@ color:white;
 text-align:center;
 transition:.3s;
 }
-
-.light{
-background:#f4f4f4;
-color:#111;
-}
+.light{background:#f4f4f4;color:#111}
 
 /* LOGO */
 .logo{
@@ -33,33 +29,36 @@ color:#0ff;
 text-shadow:0 0 10px #0ff,0 0 40px #8a2be2;
 }
 
-/* MENU IZQ */
+/* MENU */
 .menuBtn{
 position:fixed;
 top:15px;
 left:15px;
 font-size:26px;
 cursor:pointer;
+z-index:5;
 }
 
 .menu{
 position:fixed;
 top:0;
-left:-230px;
-width:230px;
+left:-240px;
+width:240px;
 height:100%;
 background:#111;
 padding-top:80px;
 transition:.4s;
+z-index:4;
 }
+
+.menu.show{left:0}
 
 .menu a{
 display:block;
 padding:15px;
 cursor:pointer;
+border-bottom:1px solid #222;
 }
-
-.menu.show{left:0}
 
 /* BOTONES */
 button{
@@ -96,6 +95,13 @@ transform:scale(1.05);
 box-shadow:0 0 25px #0ff7;
 }
 
+.card img{
+width:85px;
+height:85px;
+object-fit:contain;
+margin-bottom:10px;
+}
+
 .precio{color:#8a2be2;font-size:1.4em}
 
 /* MODAL */
@@ -109,6 +115,7 @@ background:#000c;
 display:none;
 align-items:center;
 justify-content:center;
+z-index:6;
 }
 
 .box{
@@ -123,6 +130,13 @@ background:#1c1c1c;
 margin:10px;
 padding:12px;
 border-radius:10px;
+cursor:pointer;
+}
+
+.plan.active{
+background:#0ff;
+color:black;
+font-weight:bold;
 }
 
 /* CARRITO */
@@ -144,7 +158,7 @@ background:#111;
 padding:20px;
 border-radius:15px;
 display:none;
-width:250px;
+width:260px;
 }
 
 /* NEWS */
@@ -183,6 +197,7 @@ border-radius:10px;
 <a onclick="nav('shop')">Tienda</a>
 <a onclick="nav('news')">Noticias</a>
 <a onclick="toggleMode()">Modo claro/oscuro</a>
+<a onclick="toggleMenu()">Cerrar menú</a>
 </div>
 
 <div class="logo">THOVAL</div>
@@ -201,6 +216,8 @@ border-radius:10px;
 <div id="items"></div>
 <hr>
 Total $<span id="total">0</span>
+<br><br>
+<button onclick="checkout()">Finalizar compra</button>
 </div>
 
 <!-- TIENDA -->
@@ -225,13 +242,13 @@ Total $<span id="total">0</span>
 
 /* SERVICIOS */
 const servicios=[
-{name:"Netflix",precio:4990,cat:"peliculas"},
-{name:"Disney+",precio:6990,cat:"peliculas"},
-{name:"HBO Max",precio:5990,cat:"peliculas"},
-{name:"Spotify",precio:3990,cat:"musica"},
-{name:"YouTube Premium",precio:5990,cat:"musica"},
-{name:"ESPN+",precio:7990,cat:"deportes"},
-{name:"DAZN",precio:8990,cat:"deportes"}
+{name:"Netflix",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"},
+{name:"Disney+",precio:6990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"},
+{name:"HBO Max",precio:5990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg"},
+{name:"Spotify",precio:3990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"},
+{name:"YouTube Premium",precio:5990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"},
+{name:"ESPN+",precio:7990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg"},
+{name:"DAZN",precio:8990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/8/8e/DAZN_Logo_Master.svg"}
 ]
 
 let total=0,count=0
@@ -240,7 +257,8 @@ function render(list){
 grid.innerHTML=""
 list.forEach(s=>{
 grid.innerHTML+=`
-<div class="card" onclick="openProd('${s.name}',${s.precio})">
+<div class="card" onclick="openProd('${s.name}')">
+<img src="${s.img}">
 <h3>${s.name}</h3>
 <div class="precio">$${s.precio}</div>
 </div>`
@@ -263,7 +281,7 @@ menu.classList.toggle("show")
 function nav(x){
 shop.style.display=x=="shop"?"block":"none"
 news.style.display=x=="news"?"block":"none"
-menu.classList.remove("show")
+toggleMenu()
 }
 
 /* DARK MODE */
@@ -276,7 +294,7 @@ function add(n,p){
 total+=p
 count++
 countEl.innerText=count
-items.innerHTML+=`<div>${n} $${p}</div>`
+items.innerHTML+=`<div>${n} — $${p}</div>`
 totalEl.innerText=total
 }
 
@@ -285,29 +303,57 @@ cartBox.style.display=
 cartBox.style.display==="block"?"none":"block"
 }
 
+function checkout(){
+if(count===0) return alert("Carrito vacío")
+alert("Compra simulada realizada ✔\nTotal: $"+total)
+items.innerHTML=""
+total=0
+count=0
+countEl.innerText=0
+totalEl.innerText=0
+}
+
 const countEl=document.getElementById("count")
 const totalEl=document.getElementById("total")
 
 /* MODAL PRODUCTO */
-function openProd(n,p){
+function openProd(nombre){
+const s=servicios.find(x=>x.name==nombre)
 modal.style.display="flex"
+
 content.innerHTML=`
-<h2>${n}</h2>
+<h2>${s.name}</h2>
+<img src="${s.img}" width="90">
 <h3>Planes</h3>
-<div class="plan" onclick="add('${n}',${p})">1 mes — $${p}</div>
-<div class="plan" onclick="add('${n}',${p*3})">3 meses — $${p*3}</div>
-<div class="plan" onclick="add('${n}',${p*6})">6 meses — $${p*6}</div>
+
+<div class="plan" onclick="selectPlan(this,'${s.name}',${s.precio})">1 mes — $${s.precio}</div>
+<div class="plan" onclick="selectPlan(this,'${s.name}',${s.precio*3})">3 meses — $${s.precio*3}</div>
+<div class="plan" onclick="selectPlan(this,'${s.name}',${s.precio*6})">6 meses — $${s.precio*6}</div>
+
+<button id="addBtn" disabled>Agregar al carrito</button>
 
 <h3>Reseña</h3>
 <input id="u" placeholder="Nombre">
 <select id="s"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
 <textarea id="c"></textarea>
-<button onclick="save('${n}')">Enviar</button>
+<button onclick="save('${s.name}')">Enviar</button>
 
 <div id="rev"></div>
 <button onclick="modal.style.display='none'">Cerrar</button>
 `
-load(n)
+load(nombre)
+}
+
+let selectedPrice=0
+let selectedName=""
+
+function selectPlan(el,name,price){
+document.querySelectorAll(".plan").forEach(p=>p.classList.remove("active"))
+el.classList.add("active")
+selectedPrice=price
+selectedName=name
+addBtn.disabled=false
+addBtn.onclick=()=>add(selectedName,selectedPrice)
 }
 
 /* REVIEWS */
