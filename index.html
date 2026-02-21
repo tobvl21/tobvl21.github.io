@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>THOVAL Store</title>
+<title>THOVAL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Orbitron:wght@600&display=swap" rel="stylesheet">
@@ -13,13 +13,19 @@
 body{
 margin:0;
 font-family:Poppins;
+background:#050505;
 color:white;
 text-align:center;
-background:#000;
-overflow-x:hidden;
+transition:.4s;
 }
 
-/* FONDO ANIMADO SEGURO */
+/* MODO CLARO */
+.light{
+background:#f5f5f5;
+color:#111;
+}
+
+/* FONDO PREMIUM */
 body::before{
 content:"";
 position:fixed;
@@ -27,25 +33,54 @@ width:100%;
 height:100%;
 background:
 radial-gradient(circle at 20% 30%, rgba(255,215,0,0.08), transparent 40%),
-radial-gradient(circle at 80% 70%, rgba(255,215,0,0.06), transparent 40%),
-radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04), transparent 60%);
-animation:move 18s infinite alternate ease-in-out;
+radial-gradient(circle at 80% 70%, rgba(255,215,0,0.05), transparent 40%);
+animation:bgmove 18s infinite alternate ease-in-out;
 z-index:-1;
 }
 
-@keyframes move{
+@keyframes bgmove{
 from{transform:translateY(0)}
-to{transform:translateY(-60px)}
+to{transform:translateY(-70px)}
+}
+
+/* INTRO */
+#intro{
+position:fixed;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:3em;
+font-family:Orbitron;
+z-index:999;
+animation:fadeout 2.5s forwards 1.5s;
+}
+
+@keyframes fadeout{
+to{opacity:0;visibility:hidden}
 }
 
 /* LOGO */
 .logo{
 font-family:Orbitron;
-font-size:3.2em;
-margin:30px 0;
+font-size:3em;
+margin:25px;
 background:linear-gradient(45deg,#d4af37,#ffd700,#b8962e);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+}
+
+/* NAV */
+nav{
+margin-bottom:20px;
+}
+
+select{
+padding:10px;
+border-radius:10px;
+font-size:15px;
 }
 
 /* GRID */
@@ -57,92 +92,76 @@ gap:25px;
 padding:20px;
 }
 
-/* TARJETAS */
+/* CARD GLASS */
 .card{
-background:#0b0b0b;
-width:230px;
+backdrop-filter:blur(14px);
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
 border-radius:18px;
 padding:25px;
+width:230px;
 transition:.35s;
-border:1px solid rgba(255,215,0,.15);
 }
 
 .card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 30px rgba(255,215,0,.25);
+transform:translateY(-12px) scale(1.03);
+box-shadow:0 0 35px rgba(255,215,0,.25);
 }
 
 .card img{
-width:85px;
-height:85px;
+width:80px;
+height:80px;
 object-fit:contain;
-margin-bottom:10px;
 }
 
-/* PRECIO */
+/* TEXTO */
 .precio{
 color:#ffd700;
 font-size:1.5em;
-margin:10px 0;
-font-weight:bold;
+margin:10px;
 }
 
-/* TEXTO INFO */
 .info{
 font-size:14px;
 opacity:.85;
 }
 
-/* BOTONES */
+/* BOTON */
 button{
-margin-top:15px;
-padding:12px 25px;
+margin-top:12px;
+padding:11px 25px;
 border:none;
 border-radius:10px;
 font-weight:bold;
 cursor:pointer;
 background:linear-gradient(45deg,#d4af37,#ffd700);
-transition:.25s;
 }
 
-button:hover{
-transform:scale(1.05);
-}
-
-/* CARRITO ICONO */
-#carritoIcon{
+/* CARRITO */
+#cartIcon{
 position:fixed;
-top:20px;
+top:15px;
 right:20px;
 background:#111;
-padding:15px 20px;
+padding:14px 18px;
 border-radius:14px;
 cursor:pointer;
-font-weight:bold;
-box-shadow:0 0 10px rgba(0,0,0,.6);
 }
 
-/* CAJA CARRITO */
-#carritoBox{
+#cartBox{
 position:fixed;
+top:70px;
 right:20px;
-top:80px;
 width:260px;
 background:#111;
-border-radius:15px;
 padding:20px;
+border-radius:16px;
 display:none;
-box-shadow:0 0 20px rgba(0,0,0,.7);
 }
 
-.item{
-font-size:14px;
-margin:6px 0;
-}
-
-/* REDES */
+/* REDES SVG */
 .redes{
-margin:50px 0;
+margin:40px;
 }
 
 .redes a{
@@ -151,103 +170,155 @@ align-items:center;
 justify-content:center;
 width:55px;
 height:55px;
-border-radius:50%;
 margin:10px;
-color:white;
-font-size:22px;
-text-decoration:none;
+border-radius:50%;
 transition:.3s;
 }
 
 .redes a:hover{
-transform:scale(1.18);
+transform:scale(1.15);
 }
 
-/* COLORES REDES */
-.ig{background:#E1306C;}
-.wa{background:#25D366;}
-.tk{background:#111;}
-.yt{background:#FF0000;}
+.ig{background:#E1306C}
+.wa{background:#25D366}
+.tk{background:#111}
+.yt{background:#FF0000}
+
+svg{
+width:26px;
+fill:white;
+}
+
+/* TOGGLE */
+.toggle{
+position:fixed;
+left:20px;
+top:15px;
+cursor:pointer;
+background:#111;
+padding:12px 16px;
+border-radius:12px;
+}
 
 </style>
 </head>
 
 <body>
 
+<div id="intro">THOVAL</div>
+
+<div class="toggle" onclick="toggleMode()">☀️</div>
+
 <div class="logo">THOVAL</div>
 
-<!-- CARRITO -->
-<div id="carritoIcon" onclick="toggleCart()">🛒 <span id="count">0</span></div>
+<nav>
+<select onchange="filtrar(this.value)">
+<option value="all">Todas</option>
+<option value="peliculas">Películas</option>
+<option value="musica">Música</option>
+<option value="deportes">Deportes</option>
+</select>
+</nav>
 
-<div id="carritoBox">
+<div id="cartIcon" onclick="toggleCart()">🛒 <span id="count">0</span></div>
+
+<div id="cartBox">
 <h3>Carrito</h3>
 <div id="items"></div>
 <hr>
-Total: $<span id="total">0</span> CLP<br><br>
-<button onclick="comprar()">Finalizar compra</button>
+Total: $<span id="total">0</span>
+<br><br>
+<button onclick="comprar()">Comprar</button>
 </div>
 
-<!-- SERVICIOS -->
 <div class="grid" id="grid"></div>
 
 <!-- REDES -->
 <div class="redes">
-<a class="ig" href="#">📷</a>
-<a class="wa" href="#">💬</a>
-<a class="tk" href="#">♪</a>
-<a class="yt" href="#">▶</a>
+
+<a class="ig" href="#">
+<svg viewBox="0 0 24 24"><path d="M7 2C4 2 2 4 2 7v10c0 3 2 5 5 5h10c3 0 5-2 5-5V7c0-3-2-5-5-5H7zm5 5a5 5 0 110 10 5 5 0 010-10zm6-1a1 1 0 110 2 1 1 0 010-2z"/></svg>
+</a>
+
+<a class="wa" href="#">
+<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.7 15l-1.3 5 5-1.3A10 10 0 1012 2z"/></svg>
+</a>
+
+<a class="tk" href="#">
+<svg viewBox="0 0 24 24"><path d="M9 3v12a3 3 0 11-3-3"/></svg>
+</a>
+
+<a class="yt" href="#">
+<svg viewBox="0 0 24 24"><path d="M23 7s-.2-1.5-.8-2.1c-.7-.8-1.5-.8-1.9-.9C17.5 3.7 12 3.7 12 3.7h0s-5.5 0-8.3.3c-.4.1-1.2.1-1.9.9C1.2 5.5 1 7 1 7S.8 8.7.8 10.3v1.4C.8 13.3 1 15 1 15s.2 1.5.8 2.1c.7.8 1.6.8 2 .9 1.4.1 6.2.3 6.2.3s5.5 0 8.3-.3c.4-.1 1.2-.1 1.9-.9.6-.6.8-2.1.8-2.1s.2-1.7.2-3.3v-1.4C23.2 8.7 23 7 23 7z"/></svg>
+</a>
+
 </div>
 
 <script>
 
-/* LISTA SERVICIOS */
+/* DATOS */
 const servicios=[
-{name:"Netflix",precio:4990,img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",disp:"1 pantalla"},
-{name:"YouTube Premium",precio:5990,img:"https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",disp:"1 dispositivo"},
-{name:"Spotify",precio:3990,img:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",disp:"1 dispositivo"},
-{name:"Crunchyroll",precio:5490,img:"https://wp.logos-download.com/wp-content/uploads/2023/02/Crunchyroll_Logo.png?dl",disp:"2 dispositivos"},
-{name:"HBO Max",precio:6990,img:"https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg",disp:"4 dispositivos"},
-{name:"Prime Video",precio:4990,img:"https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png",disp:"3 dispositivos"},
-{name:"Apple TV+",precio:5990,img:"https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",disp:"4 dispositivos"},
-{name:"Paramount+",precio:4990,img:"https://upload.wikimedia.org/wikipedia/commons/9/90/Paramount_Pictures_Corporation_logo.svg",disp:"2 dispositivos"}
+{name:"Netflix",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",disp:"1 pantalla"},
+{name:"HBO Max",precio:6990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg",disp:"4 dispositivos"},
+{name:"Prime Video",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png",disp:"3 dispositivos"},
+{name:"Spotify",precio:3990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",disp:"1 dispositivo"},
+{name:"YouTube Premium",precio:5990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",disp:"1 dispositivo"},
+{name:"ESPN+",precio:7990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg",disp:"2 dispositivos"}
 ]
 
 let total=0
-let cantidad=0
+let count=0
 
-const grid=document.getElementById("grid")
-
-servicios.forEach(s=>{
+function render(lista){
+grid.innerHTML=""
+lista.forEach(s=>{
 grid.innerHTML+=`
 <div class="card">
 <img src="${s.img}">
 <h3>${s.name}</h3>
 <div class="precio">$${s.precio}</div>
-<div class="info">Duración: 30 días</div>
+<div class="info">30 días</div>
 <div class="info">${s.disp}</div>
 <button onclick="add('${s.name}',${s.precio})">Agregar</button>
 </div>`
 })
+}
 
-function add(nombre,precio){
-total+=precio
-cantidad++
-count.innerText=cantidad
-items.innerHTML+=`<div class="item">${nombre} — $${precio}</div>`
+render(servicios)
+
+/* FILTRO */
+function filtrar(cat){
+if(cat==="all") return render(servicios)
+render(servicios.filter(s=>s.cat===cat))
+}
+
+/* CARRITO */
+function add(n,p){
+total+=p
+count++
+document.getElementById("count").innerText=count
+items.innerHTML+=`<div>${n} — $${p}</div>`
+document.getElementById("total").innerText=total
 }
 
 function toggleCart(){
-carritoBox.style.display=
-carritoBox.style.display==="block"?"none":"block"
+cartBox.style.display=
+cartBox.style.display==="block"?"none":"block"
 }
 
 function comprar(){
-if(cantidad==0){alert("Carrito vacío");return}
-alert("GRACIAS POR SU COMPRA ✔ Total: $"+total+" CLP")
-total=0
-cantidad=0
+if(count==0)return alert("Carrito vacío")
+alert("Compra realizada ✔")
 items.innerHTML=""
-count.innerText=0
+total=0
+count=0
+document.getElementById("count").innerText=0
+document.getElementById("total").innerText=0
+}
+
+/* MODO */
+function toggleMode(){
+document.body.classList.toggle("light")
 }
 
 </script>
