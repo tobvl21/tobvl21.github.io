@@ -12,48 +12,62 @@
 /* BASE */
 body{
 margin:0;
-font-family:Poppins;
+background:#0a0a0a;
 color:white;
+font-family:Poppins;
 text-align:center;
-background:url("https://images.unsplash.com/photo-1611162616475-46b635cb6868") center/cover fixed;
+overflow-x:hidden;
 }
 
-body::before{
-content:"";
+/* INTRO */
+#intro{
 position:fixed;
 width:100%;
 height:100%;
-background:rgba(0,0,0,.78);
-z-index:-1;
+background:black;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+animation:fade 2.5s forwards 2s;
 }
 
-/* LOGO */
+@keyframes fade{
+to{opacity:0;visibility:hidden}
+}
+
+/* LOGO LED */
 .logo{
 font-family:Orbitron;
-font-size:4em;
+font-size:3.5em;
 margin:25px;
-background:linear-gradient(45deg,#ffd700,#caa300,#ffd700);
--webkit-background-clip:text;
-color:transparent;
-text-shadow:
-0 0 8px rgba(255,215,0,.8),
-0 0 25px rgba(255,215,0,.6),
-0 0 45px rgba(255,215,0,.4);
-animation:shine 3s infinite linear;
+padding:10px 25px;
+border:3px solid gold;
+border-radius:14px;
+color:gold;
+text-shadow:0 0 10px gold,0 0 30px gold;
+animation:led 2s infinite alternate;
+display:inline-block;
 }
 
-@keyframes shine{
-0%{filter:brightness(1)}
-50%{filter:brightness(1.5)}
-100%{filter:brightness(1)}
+@keyframes led{
+from{box-shadow:0 0 10px gold}
+to{box-shadow:0 0 35px gold,0 0 60px orange}
 }
 
-/* MENU */
-select{
-padding:12px;
-border-radius:10px;
-font-size:16px;
+/* NAV */
+nav{
 margin-bottom:20px;
+}
+
+button.menu{
+padding:10px 18px;
+margin:5px;
+border:none;
+border-radius:8px;
+background:#1a1a1a;
+color:white;
+cursor:pointer;
 }
 
 /* GRID */
@@ -66,103 +80,87 @@ padding:20px;
 }
 
 .card{
-width:230px;
+width:220px;
+background:#111;
+border-radius:18px;
 padding:25px;
-border-radius:20px;
-backdrop-filter:blur(14px);
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,255,255,.15);
 transition:.35s;
+cursor:pointer;
+border:1px solid #222;
 }
 
 .card:hover{
-transform:translateY(-10px) scale(1.04);
-box-shadow:0 0 30px rgba(255,215,0,.25);
+transform:translateY(-10px);
+box-shadow:0 0 25px rgba(255,215,0,.25);
 }
 
 .card img{
-width:80px;
-height:80px;
+width:85px;
+height:85px;
 object-fit:contain;
 }
 
 .precio{
-color:#ffd700;
+color:gold;
 font-size:1.4em;
 margin:10px;
 }
 
-button{
-padding:10px 22px;
-border:none;
-border-radius:10px;
-font-weight:bold;
-cursor:pointer;
-background:linear-gradient(45deg,#ffd700,#caa300);
-}
-
-/* CARRITO */
-#cart{
+/* MODAL PRODUCTO */
+.modal{
 position:fixed;
-top:15px;
-right:20px;
-background:#111;
-padding:14px 18px;
-border-radius:14px;
-cursor:pointer;
-}
-
-#panelCart{
-position:fixed;
-top:70px;
-right:20px;
-width:260px;
-background:#111;
-padding:20px;
-border-radius:16px;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.85);
 display:none;
-}
-
-/* REDES */
-.redes a{
-display:inline-flex;
-width:55px;
-height:55px;
-margin:12px;
-border-radius:50%;
 align-items:center;
 justify-content:center;
-transition:.3s;
 }
 
-.redes a:hover{transform:scale(1.2)}
+.box{
+background:#111;
+padding:30px;
+border-radius:20px;
+width:350px;
+}
 
-.ig{background:#E1306C}
-.wa{background:#25D366}
-.tk{background:#000}
-.yt{background:#FF0000}
-
-svg{width:26px;fill:white}
+.plan{
+background:#1c1c1c;
+margin:10px;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+}
 
 /* REVIEWS */
-.reviewBox{
-max-width:500px;
-margin:auto;
+textarea,input{
+width:80%;
+margin:5px;
+padding:8px;
+border-radius:8px;
+border:none;
 }
 
 .review{
-background:rgba(255,255,255,.07);
-padding:15px;
-margin:12px;
-border-radius:12px;
+background:#1a1a1a;
+margin:10px;
+padding:10px;
+border-radius:10px;
 }
 
-/* NEWS */
-.news div{
-background:rgba(255,255,255,.08);
-margin:12px auto;
-padding:18px;
-width:70%;
+/* NEWS PANEL */
+#newsPanel{
+display:none;
+padding:30px;
+}
+
+.news{
+background:#151515;
+margin:15px auto;
+padding:20px;
+width:60%;
 border-radius:14px;
 }
 
@@ -170,125 +168,132 @@ border-radius:14px;
 </head>
 <body>
 
+<div id="intro"><div class="logo">THOVAL</div></div>
+
 <div class="logo">THOVAL</div>
 
-<select onchange="filtrar(this.value)">
-<option value="all">Todas</option>
-<option value="peliculas">Películas</option>
-<option value="musica">Música</option>
-<option value="deportes">Deportes</option>
-</select>
+<nav>
+<button class="menu" onclick="mostrar('tienda')">Tienda</button>
+<button class="menu" onclick="mostrar('news')">Noticias</button>
+</nav>
 
-<div id="cart" onclick="toggleCart()">🛒 <span id="count">0</span></div>
-
-<div id="panelCart">
-<h3>Carrito</h3>
-<div id="items"></div>
-<hr>
-Total $<span id="total">0</span>
-</div>
+<!-- TIENDA -->
+<div id="tienda">
 
 <div class="grid" id="grid"></div>
 
-<h2>⭐ Opiniones</h2>
-
-<div class="reviewBox">
-<input id="nombre" placeholder="Nombre"><br><br>
-<select id="stars">
-<option>5</option><option>4</option><option>3</option><option>2</option><option>1</option>
-</select><br><br>
-<textarea id="coment" placeholder="Comentario"></textarea><br><br>
-<button onclick="guardarReview()">Enviar</button>
-
-<div id="reviews"></div>
 </div>
 
-<h2>📰 Noticias</h2>
-
-<div class="news">
-<div>🎮 Nuevo juego rompe récord mundial</div>
-<div>🎬 Estreno de película arrasa taquilla</div>
-<div>⚽ Final histórica sorprende al mundo</div>
-<div>🦸 Nueva serie de superhéroes confirmada</div>
+<!-- NEWS -->
+<div id="newsPanel">
+<h2>Noticias</h2>
+<div class="news">🎮 Nuevo juego rompe récord mundial</div>
+<div class="news">🎬 Película arrasa en taquilla</div>
+<div class="news">⚽ Partido histórico sorprende fans</div>
+<div class="news">🦸 Nueva serie confirmada</div>
 </div>
 
-<div class="redes">
-
-<a class="ig"><svg viewBox="0 0 24 24"><path d="M7 2C4 2 2 4 2 7v10c0 3 2 5 5 5h10c3 0 5-2 5-5V7c0-3-2-5-5-5z"/></svg></a>
-
-<a class="wa"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.7 15l-1.3 5 5-1.3A10 10 0 1012 2z"/></svg></a>
-
-<a class="tk"><svg viewBox="0 0 24 24"><path d="M16 3a6 6 0 003 1v4a10 10 0 01-3-1v7a5 5 0 11-5-5"/></svg></a>
-
-<a class="yt"><svg viewBox="0 0 24 24"><path d="M23 7s-.2-1.5-.8-2.1c-.7-.8-1.5-.8-1.9-.9C17.5 3.7 12 3.7 12 3.7s-5.5 0-8.3.3c-.4.1-1.2.1-1.9.9C1.2 5.5 1 7 1 7S.8 8.7.8 10.3v1.4C.8 13.3 1 15 1 15s.2 1.5.8 2.1c.7.8 1.6.8 2 .9 1.4.1 6.2.3 6.2.3s5.5 0 8.3-.3c.4-.1 1.2-.1 1.9-.9.6-.6.8-2.1.8-2.1s.2-1.7.2-3.3v-1.4C23.2 8.7 23 7 23 7z"/></svg></a>
-
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="box" id="modalContent"></div>
 </div>
 
 <script>
 
+/* DATA */
 const servicios=[
-{name:"Netflix",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"},
-{name:"Spotify",precio:3990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"},
-{name:"Disney+",precio:6990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"},
-{name:"ESPN+",precio:7990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg"}
+{
+name:"Netflix",
+precio:4990,
+img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
+desc:"Plataforma líder de series y películas."
+},
+{
+name:"Spotify",
+precio:3990,
+img:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",
+desc:"Música ilimitada sin anuncios."
+},
+{
+name:"Disney+",
+precio:6990,
+img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg",
+desc:"Contenido Disney, Marvel y más."
+}
 ]
 
-let total=0,count=0
-
-function render(lista){
+/* RENDER CARDS */
+function render(){
 grid.innerHTML=""
-lista.forEach(s=>{
+servicios.forEach(s=>{
 grid.innerHTML+=`
-<div class="card">
+<div class="card" onclick="abrir('${s.name}')">
 <img src="${s.img}">
 <h3>${s.name}</h3>
 <div class="precio">$${s.precio}</div>
-<button onclick="add('${s.name}',${s.precio})">Agregar</button>
 </div>`
 })
 }
-render(servicios)
+render()
 
-function filtrar(cat){
-if(cat==="all")render(servicios)
-else render(servicios.filter(x=>x.cat===cat))
+/* SWITCH MENU */
+function mostrar(sec){
+tienda.style.display=sec=="tienda"?"block":"none"
+newsPanel.style.display=sec=="news"?"block":"none"
 }
 
-function add(n,p){
-total+=p
-count++
-countEl.innerText=count
-items.innerHTML+=`<div>${n} $${p}</div>`
-totalEl.innerText=total
+/* MODAL PRODUCTO */
+function abrir(nombre){
+const s=servicios.find(x=>x.name==nombre)
+
+modal.style.display="flex"
+
+modalContent.innerHTML=`
+<h2>${s.name}</h2>
+<img src="${s.img}" width="90">
+<p>${s.desc}</p>
+
+<h3>Planes</h3>
+<div class="plan">1 mes — $${s.precio}</div>
+<div class="plan">3 meses — $${s.precio*3}</div>
+<div class="plan">6 meses — $${s.precio*6}</div>
+
+<h3>Opiniones</h3>
+<input id="user" placeholder="Nombre">
+<select id="stars">
+<option>5</option><option>4</option><option>3</option><option>2</option><option>1</option>
+</select>
+<textarea id="comment" placeholder="Comentario"></textarea>
+<button onclick="guardar('${s.name}')">Enviar</button>
+
+<div id="reviews"></div>
+<button onclick="cerrar()">Cerrar</button>
+`
+
+cargar(nombre)
 }
 
-function toggleCart(){
-panelCart.style.display=
-panelCart.style.display==="block"?"none":"block"
-}
+function cerrar(){modal.style.display="none"}
 
-const countEl=document.getElementById("count")
-const totalEl=document.getElementById("total")
-
-/* REVIEWS LOCAL */
-function guardarReview(){
+/* REVIEWS */
+function guardar(prod){
 const r={
-n:nombre.value,
+n:user.value,
 s:stars.value,
-c:coment.value
+c:comment.value
 }
-let data=JSON.parse(localStorage.getItem("reviews")||"[]")
+let data=JSON.parse(localStorage.getItem(prod)||"[]")
 data.push(r)
-localStorage.setItem("reviews",JSON.stringify(data))
-mostrar()
+localStorage.setItem(prod,JSON.stringify(data))
+cargar(prod)
 }
 
-function mostrar(){
-let data=JSON.parse(localStorage.getItem("reviews")||"[]")
+function cargar(prod){
+let data=JSON.parse(localStorage.getItem(prod)||"[]")
 reviews.innerHTML=data.map(x=>`
-<div class="review">⭐${x.s} — ${x.n}<br>${x.c}</div>`).join("")
+<div class="review">⭐${x.s} ${x.n}<br>${x.c}</div>
+`).join("")
 }
-mostrar()
 
 </script>
 </body>
