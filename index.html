@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>THOVAL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* BASE */
@@ -9,29 +18,37 @@ color:white;
 transition:.4s;
 }
 
-.light{background:#f2f2f2;color:#111}
-
-/* HEADER CENTRADO */
-.topbar{
-text-align:center;
-margin-top:15px;
+.light{
+background:#f1f1f1;
+color:#111;
 }
 
-/* LOGO */
-.logo{
+/* LOADER */
+#loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#0b0b0f;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+.loaderLogo{
 font-family:Orbitron;
-font-size:3em;
+font-size:3.5em;
 color:#d4af37;
-text-shadow:0 0 10px #d4af37,0 0 30px #8c7425;
-margin-bottom:10px;
+text-shadow:0 0 15px #d4af37,0 0 40px #b8962e;
+animation:glow 1.5s infinite alternate;
 }
 
-/* FILTROS */
-.filters button{
-margin:6px;
+@keyframes glow{
+from{opacity:.5;transform:scale(.95)}
+to{opacity:1;transform:scale(1.05)}
 }
 
-/* MENU BTN */
+/* MENU */
 .menuBtn{
 position:fixed;
 top:15px;
@@ -41,7 +58,6 @@ cursor:pointer;
 z-index:5;
 }
 
-/* MENU */
 .menu{
 position:fixed;
 top:0;
@@ -53,7 +69,9 @@ padding-top:80px;
 transition:.4s;
 z-index:4;
 }
+
 .menu.show{left:0}
+
 .menu a{
 display:block;
 padding:15px;
@@ -61,7 +79,21 @@ cursor:pointer;
 border-bottom:1px solid #222;
 }
 
-/* BOTONES */
+/* HEADER */
+.topbar{
+text-align:center;
+margin-top:15px;
+}
+
+.logo{
+font-family:Orbitron;
+font-size:3em;
+color:#d4af37;
+text-shadow:0 0 10px #d4af37,0 0 30px #8c7425;
+margin-bottom:10px;
+}
+
+/* BUTTONS */
 button{
 padding:10px 18px;
 border:none;
@@ -83,7 +115,7 @@ justify-content:center;
 padding:30px;
 }
 
-/* TARJETAS MEJORADAS */
+/* CARD */
 .card{
 width:230px;
 padding:25px;
@@ -97,7 +129,6 @@ cursor:pointer;
 display:flex;
 flex-direction:column;
 align-items:center;
-justify-content:center;
 text-align:center;
 }
 
@@ -105,7 +136,6 @@ text-align:center;
 transform:translateY(-8px) scale(1.03);
 }
 
-/* LOGO SERVICIO */
 .card img{
 width:85px;
 height:85px;
@@ -113,7 +143,6 @@ object-fit:contain;
 margin-bottom:12px;
 }
 
-/* PRECIO */
 .precio{
 color:#b8962e;
 font-size:1.4em;
@@ -121,44 +150,7 @@ font-weight:700;
 margin-top:5px;
 }
 
-/* MODAL */
-.modal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000c;
-display:none;
-align-items:center;
-justify-content:center;
-z-index:6;
-}
-
-.box{
-background:white;
-color:#111;
-padding:30px;
-border-radius:18px;
-width:360px;
-text-align:center;
-}
-
-/* PLAN */
-.plan{
-background:#eee;
-margin:10px;
-padding:12px;
-border-radius:10px;
-cursor:pointer;
-}
-.plan.active{
-background:#d4af37;
-color:black;
-font-weight:bold;
-}
-
-/* CARRITO */
+/* CART */
 #cart{
 position:fixed;
 top:15px;
@@ -184,8 +176,45 @@ width:260px;
 box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
+/* MODAL */
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000c;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:6;
+}
+
+.box{
+background:white;
+color:#111;
+padding:30px;
+border-radius:18px;
+width:360px;
+text-align:center;
+}
+
+.plan{
+background:#eee;
+margin:10px;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.plan.active{
+background:#d4af37;
+font-weight:bold;
+}
+
 /* NEWS */
 #news{display:none}
+
 .newsCard{
 background:white;
 color:#111;
@@ -194,6 +223,22 @@ padding:20px;
 width:60%;
 border-radius:14px;
 box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+/* FORM */
+input,textarea,select{
+width:85%;
+margin:6px;
+padding:9px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+.review{
+background:#eee;
+margin:10px;
+padding:10px;
+border-radius:10px;
 }
 
 /* FOOTER */
@@ -205,10 +250,6 @@ background:#0a0a0a;
 border-top:1px solid #222;
 }
 
-.socials{
-margin-bottom:15px;
-}
-
 .socials a{
 display:inline-block;
 margin:0 10px;
@@ -216,8 +257,215 @@ font-size:22px;
 color:#d4af37;
 transition:.3s;
 }
-.socials a:hover{
-transform:scale(1.2);
-}
+.socials a:hover{transform:scale(1.2)}
 
 </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+<div class="loaderLogo">THOVAL</div>
+</div>
+
+<div class="menuBtn" onclick="toggleMenu()">☰</div>
+
+<div class="menu" id="menu">
+<a onclick="nav('shop')">Tienda</a>
+<a onclick="nav('news')">Noticias</a>
+<a onclick="toggleMode()">Modo claro/oscuro</a>
+<a onclick="toggleMenu()">Cerrar menú</a>
+</div>
+
+<div id="cart" onclick="toggleCart()">🛒 <span id="count">0</span></div>
+
+<!-- HEADER -->
+<div class="topbar">
+<div class="logo">THOVAL</div>
+
+<button onclick="filter('all')">Todos</button>
+<button onclick="filter('peliculas')">Películas</button>
+<button onclick="filter('musica')">Música</button>
+<button onclick="filter('deportes')">Deportes</button>
+</div>
+
+<!-- CART BOX -->
+<div id="cartBox">
+<h3>Carrito</h3>
+<div id="items"></div>
+<hr>
+Total $<span id="total">0</span>
+<br><br>
+<button onclick="checkout()">Finalizar compra</button>
+</div>
+
+<!-- SHOP -->
+<div id="shop">
+<div class="grid" id="grid"></div>
+</div>
+
+<!-- NEWS -->
+<div id="news">
+<h2 style="text-align:center">Noticias</h2>
+<div class="newsCard">🎮 Nuevo juego rompe récord mundial</div>
+<div class="newsCard">🎬 Estreno más esperado del año</div>
+<div class="newsCard">⚽ Final histórica internacional</div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="box" id="content"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="socials">
+<a href="#">📷</a>
+<a href="#">💬</a>
+<a href="#">🎵</a>
+<a href="#">▶</a>
+</div>
+<div>© 2026 THOVAL.CL — Todos los derechos reservados</div>
+</footer>
+
+<script>
+
+/* LOADER */
+setTimeout(()=>loader.style.display="none",2500)
+
+/* SERVICIOS */
+const servicios=[
+{name:"Netflix",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"},
+{name:"Disney+",precio:6990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"},
+{name:"Prime Video",precio:5990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png"},
+{name:"Max",precio:6990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg"},
+{name:"Paramount+",precio:5990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Paramount%2B_logo.svg"},
+{name:"Crunchyroll",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Crunchyroll_Logo.svg"},
+{name:"Spotify",precio:3990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"},
+{name:"YouTube Premium",precio:5990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"},
+{name:"Deezer",precio:3990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/4/4f/Deezer_logo.svg"},
+{name:"Tidal",precio:4990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/9/9c/Tidal_logo.svg"},
+{name:"DAZN",precio:8990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/8/8e/DAZN_Logo_Master.svg"},
+{name:"Fanatiz",precio:7990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/3/3d/Fanatiz_logo.png"}
+]
+
+let total=0,count=0
+
+function render(list){
+grid.innerHTML=""
+list.forEach(s=>{
+grid.innerHTML+=`
+<div class="card" onclick="openProd('${s.name}')">
+<img src="${s.img}">
+<h3>${s.name}</h3>
+<div class="precio">$${s.precio}</div>
+</div>`
+})
+}
+render(servicios)
+
+/* FILTER */
+function filter(c){
+if(c==="all")render(servicios)
+else render(servicios.filter(x=>x.cat===c))
+}
+
+/* MENU */
+function toggleMenu(){menu.classList.toggle("show")}
+
+/* NAV */
+function nav(x){
+shop.style.display=x=="shop"?"block":"none"
+news.style.display=x=="news"?"block":"none"
+toggleMenu()
+}
+
+/* MODE */
+function toggleMode(){
+document.body.classList.toggle("light")
+}
+
+/* CART */
+function add(n,p){
+total+=p
+count++
+countEl.innerText=count
+items.innerHTML+=`<div>${n} — $${p}</div>`
+totalEl.innerText=total
+}
+
+function toggleCart(){
+cartBox.style.display=
+cartBox.style.display==="block"?"none":"block"
+}
+
+function checkout(){
+if(count===0)return alert("Carrito vacío")
+alert("Compra simulada ✔ Total: $"+total)
+items.innerHTML=""
+total=0
+count=0
+countEl.innerText=0
+totalEl.innerText=0
+}
+
+const countEl=document.getElementById("count")
+const totalEl=document.getElementById("total")
+
+/* MODAL */
+function openProd(nombre){
+const s=servicios.find(x=>x.name==nombre)
+modal.style.display="flex"
+
+content.innerHTML=`
+<h2>${s.name}</h2>
+<img src="${s.img}" width="90">
+
+<h3>Planes</h3>
+<div class="plan" onclick="selectPlan(this,'${s.name}',${s.precio})">1 mes — $${s.precio}</div>
+<div class="plan" onclick="selectPlan(this,'${s.name}',${s.precio*3})">3 meses — $${s.precio*3}</div>
+<div class="plan" onclick="selectPlan(this,'${s.name}',${s.precio*6})">6 meses — $${s.precio*6}</div>
+
+<button id="addBtn" disabled>Agregar al carrito</button>
+
+<h3>Reseña</h3>
+<input id="u" placeholder="Nombre">
+<select id="s"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+<textarea id="c"></textarea>
+<button onclick="save('${s.name}')">Enviar</button>
+
+<div id="rev"></div>
+<button onclick="modal.style.display='none'">Cerrar</button>
+`
+load(nombre)
+}
+
+let selectedPrice=0
+let selectedName=""
+
+function selectPlan(el,name,price){
+document.querySelectorAll(".plan").forEach(p=>p.classList.remove("active"))
+el.classList.add("active")
+selectedPrice=price
+selectedName=name
+addBtn.disabled=false
+addBtn.onclick=()=>add(selectedName,selectedPrice)
+}
+
+/* REVIEWS */
+function save(p){
+let r={n:u.value,s:s.value,c:c.value}
+let d=JSON.parse(localStorage.getItem(p)||"[]")
+d.push(r)
+localStorage.setItem(p,JSON.stringify(d))
+load(p)
+}
+
+function load(p){
+let d=JSON.parse(localStorage.getItem(p)||"[]")
+rev.innerHTML=d.map(x=>`<div class="review">⭐${x.s} ${x.n}<br>${x.c}</div>`).join("")
+}
+
+</script>
+</body>
+</html>
