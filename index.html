@@ -5,28 +5,56 @@
 <title>THOVAL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 
 /* BASE */
 body{
 margin:0;
-font-family:Rajdhani;
-background:#070710;
+font-family:Poppins;
+background:#0b0b0f;
 color:white;
-text-align:center;
-transition:.3s;
+transition:.4s;
 }
-.light{background:#f4f4f4;color:#111}
+
+.light{
+background:#f2f2f2;
+color:#111;
+}
+
+/* LOADER */
+#loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#0b0b0f;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+.loaderLogo{
+font-family:Orbitron;
+font-size:3.5em;
+color:#d4af37;
+text-shadow:0 0 15px #d4af37,0 0 40px #b8962e;
+animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+from{opacity:.5;transform:scale(.95)}
+to{opacity:1;transform:scale(1.05)}
+}
 
 /* LOGO */
 .logo{
 font-family:Orbitron;
 font-size:3em;
 margin:20px;
-color:#0ff;
-text-shadow:0 0 10px #0ff,0 0 40px #8a2be2;
+color:#d4af37;
+text-shadow:0 0 10px #d4af37,0 0 30px #8c7425;
 }
 
 /* MENU */
@@ -65,44 +93,55 @@ button{
 padding:10px 18px;
 margin:5px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 cursor:pointer;
-background:#111;
-color:#0ff;
+background:#d4af37;
+color:#111;
+font-weight:600;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
 }
 
 /* GRID */
 .grid{
 display:flex;
 flex-wrap:wrap;
-gap:25px;
+gap:30px;
 justify-content:center;
-padding:20px;
+padding:30px;
 }
 
+/* TARJETAS */
 .card{
-width:220px;
+width:230px;
 padding:25px;
-border-radius:16px;
-background:#0d0d18;
-border:1px solid #0ff3;
+border-radius:18px;
+background:white;
+color:#111;
+box-shadow:0 10px 25px rgba(0,0,0,.25);
 cursor:pointer;
-transition:.3s;
+transition:.35s;
 }
 
 .card:hover{
-transform:scale(1.05);
-box-shadow:0 0 25px #0ff7;
+transform:translateY(-8px) scale(1.03);
 }
 
 .card img{
-width:85px;
-height:85px;
+width:90px;
+height:90px;
 object-fit:contain;
 margin-bottom:10px;
 }
 
-.precio{color:#8a2be2;font-size:1.4em}
+.precio{
+color:#b8962e;
+font-size:1.4em;
+font-weight:700;
+}
 
 /* MODAL */
 .modal{
@@ -119,14 +158,15 @@ z-index:6;
 }
 
 .box{
-background:#111;
+background:white;
+color:#111;
 padding:30px;
 border-radius:18px;
-width:350px;
+width:360px;
 }
 
 .plan{
-background:#1c1c1c;
+background:#eee;
 margin:10px;
 padding:12px;
 border-radius:10px;
@@ -134,7 +174,7 @@ cursor:pointer;
 }
 
 .plan.active{
-background:#0ff;
+background:#d4af37;
 color:black;
 font-weight:bold;
 }
@@ -144,44 +184,50 @@ font-weight:bold;
 position:fixed;
 top:15px;
 right:20px;
-background:#111;
+background:#d4af37;
 padding:12px 18px;
 border-radius:12px;
 cursor:pointer;
+color:black;
+font-weight:bold;
 }
 
 #cartBox{
 position:fixed;
 top:70px;
 right:20px;
-background:#111;
+background:white;
+color:#111;
 padding:20px;
 border-radius:15px;
 display:none;
 width:260px;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
 /* NEWS */
 #news{display:none}
 .newsCard{
-background:#111;
+background:white;
+color:#111;
 margin:15px auto;
 padding:20px;
 width:60%;
 border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
 
 /* FORM */
 input,textarea,select{
-width:80%;
+width:85%;
 margin:6px;
 padding:9px;
 border-radius:8px;
-border:none;
+border:1px solid #ccc;
 }
 
 .review{
-background:#1a1a1a;
+background:#eee;
 margin:10px;
 padding:10px;
 border-radius:10px;
@@ -190,6 +236,11 @@ border-radius:10px;
 </style>
 </head>
 <body>
+
+<!-- LOADER -->
+<div id="loader">
+<div class="loaderLogo">THOVAL</div>
+</div>
 
 <div class="menuBtn" onclick="toggleMenu()">☰</div>
 
@@ -228,9 +279,9 @@ Total $<span id="total">0</span>
 <!-- NEWS -->
 <div id="news">
 <h2>Noticias</h2>
-<div class="newsCard">🎮 Nuevo juego rompe récord</div>
-<div class="newsCard">⚽ Final histórica</div>
-<div class="newsCard">🎬 Estreno rompe taquilla</div>
+<div class="newsCard">🎮 Nuevo juego rompe récord mundial</div>
+<div class="newsCard">🎬 Próximo estreno lidera expectativas</div>
+<div class="newsCard">⚽ Final histórica internacional</div>
 </div>
 
 <!-- MODAL -->
@@ -240,15 +291,30 @@ Total $<span id="total">0</span>
 
 <script>
 
-/* SERVICIOS */
+/* LOADER */
+setTimeout(()=>loader.style.display="none",2500)
+
+/* SERVICIOS DISPONIBLES EN CHILE (principales) */
 const servicios=[
+
 {name:"Netflix",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"},
 {name:"Disney+",precio:6990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"},
-{name:"HBO Max",precio:5990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg"},
+{name:"Prime Video",precio:5990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png"},
+{name:"Max",precio:6990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg"},
+{name:"Paramount+",precio:5990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Paramount%2B_logo.svg"},
+{name:"Apple TV+",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"},
+{name:"Crunchyroll",precio:4990,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Crunchyroll_Logo.svg"},
+{name:"Mubi",precio:5500,cat:"peliculas",img:"https://upload.wikimedia.org/wikipedia/commons/6/69/MUBI_logo.svg"},
+
 {name:"Spotify",precio:3990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"},
 {name:"YouTube Premium",precio:5990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"},
-{name:"ESPN+",precio:7990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg"},
-{name:"DAZN",precio:8990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/8/8e/DAZN_Logo_Master.svg"}
+{name:"Deezer",precio:3990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/4/4f/Deezer_logo.svg"},
+{name:"Tidal",precio:4990,cat:"musica",img:"https://upload.wikimedia.org/wikipedia/commons/9/9c/Tidal_logo.svg"},
+
+{name:"DAZN",precio:8990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/8/8e/DAZN_Logo_Master.svg"},
+{name:"Fanatiz",precio:7990,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/3/3d/Fanatiz_logo.png"},
+{name:"DGO",precio:8500,cat:"deportes",img:"https://upload.wikimedia.org/wikipedia/commons/5/5f/DirecTV_GO_logo.svg"}
+
 ]
 
 let total=0,count=0
@@ -273,9 +339,7 @@ else render(servicios.filter(x=>x.cat===c))
 }
 
 /* MENU */
-function toggleMenu(){
-menu.classList.toggle("show")
-}
+function toggleMenu(){menu.classList.toggle("show")}
 
 /* NAV */
 function nav(x){
@@ -305,7 +369,7 @@ cartBox.style.display==="block"?"none":"block"
 
 function checkout(){
 if(count===0) return alert("Carrito vacío")
-alert("Compra simulada realizada ✔\nTotal: $"+total)
+alert("Compra simulada ✔ Total: $"+total)
 items.innerHTML=""
 total=0
 count=0
@@ -316,7 +380,7 @@ totalEl.innerText=0
 const countEl=document.getElementById("count")
 const totalEl=document.getElementById("total")
 
-/* MODAL PRODUCTO */
+/* MODAL */
 function openProd(nombre){
 const s=servicios.find(x=>x.name==nombre)
 modal.style.display="flex"
